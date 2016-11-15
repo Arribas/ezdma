@@ -428,7 +428,8 @@ static void ezdma_unprepare_after_dma( struct ezdma_drvdata * p_info )
                 struct page * const page = p_info->inflight.pinned_pages[i];
 
                 set_page_dirty( page );
-                page_cache_release( page );
+                //page_cache_release( page ); //old kernels
+		put_page(page); //new kernels
             }
         }
     }
