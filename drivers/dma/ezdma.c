@@ -701,7 +701,9 @@ static int create_devices( struct ezdma_pdev_drvdata * p_pdev_info, struct platf
     {
         printk( KERN_ERR KBUILD_MODNAME ": got %d when trying to count the elements of \"dma-names\" property\n", num_dma_names);
         return num_dma_names;   // contains error code
-    }
+    }else{
+	   printk( KERN_DEBUG KBUILD_MODNAME ": Found %d elements of \"dma-names\" property\n", num_dma_names);
+	}
 
     for (dma_name_idx = 0; dma_name_idx < num_dma_names; dma_name_idx++)
     {
@@ -747,7 +749,7 @@ static int create_devices( struct ezdma_pdev_drvdata * p_pdev_info, struct platf
             strncpy( p_info->name, p_dma_name, EZDMA_DEV_NAME_MAX_CHARS-1 );
             p_info->name[EZDMA_DEV_NAME_MAX_CHARS-1] = '\0';
 
-            //printk( KERN_DEBUG KBUILD_MODNAME ": setting up %s\n", p_info->name);
+            printk( KERN_DEBUG KBUILD_MODNAME ": setting up %s\n", p_info->name);
         }
 
 
@@ -784,6 +786,7 @@ static int create_devices( struct ezdma_pdev_drvdata * p_pdev_info, struct platf
         }
 
         /* Get the named DMA channel */
+	printk( KERN_DEBUG KBUILD_MODNAME ": dma_request_slave_channel p_dma_name %s \n", p_dma_name);
         p_info->chan = dma_request_slave_channel(
                     &pdev->dev, p_dma_name);
 
